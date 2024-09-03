@@ -5,21 +5,21 @@ const Weather = () => {
   const [query, setQuery] = useState("");
   const API_KEY = "eda2fd7e5f37723a6c09e6e264583720";
 
-  const fetchWeather = async (e) => {
+  const fetchWeather = (e) => {
     e.preventDefault();
 
     if (query) {
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}&units=metric`
-        );
-        const data = response.json();
-
-        setWeather(data);
-        setQuery("");
-      } catch (e) {
-        console.error("Error fetching the weather data:", error);
-      }
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}&units=metric`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setWeather(data);
+          setQuery("");
+        })
+        .catch((e) => {
+          console.error("Error fetching the weather data:", e);
+        });
     }
   };
 
